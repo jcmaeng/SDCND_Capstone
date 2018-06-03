@@ -5,14 +5,32 @@ Git repository for the team of SDCND Capstone project
 ## To Do
 1. ~~Prepare the git repository~~
 2. ~~Make TODO list~~
-3. Implementation (classified by ROS node)
-- (Perception) Obstacle detection
-- (Perception) Traffic light detection/classification
-- (Planning) Waypoint Loader
-- (Planning) Waypoint Updater
-- (Control) Waypoint Follower
-- (Control) DBW node
-- Integration
+3. Implementation
+
+(1) Waypoint Updater Node (Partial): Complete a partial waypoint
+updater which subscribes to /base_waypoints and /current_pose and
+publishes to /final_waypoints.
+
+(2) DBW Node: Once your waypoint updater is publishing
+/final_waypoints, the waypoint_follower node will start publishing
+messages to the/twist_cmd topic. At this point, you have everything
+needed to build the dbw_node. After completing this step, the car
+should drive in the simulator, ignoring the traffic lights.
+
+(3) Traffic Light Detection: This can be split into 2 parts:
+- Detection: Detect the traffic light and its color from the
+/image_color. The topic /vehicle/traffic_lights contains the exact
+location and status of all traffic lights in simulator, so you can
+test your output.
+- Waypoint publishing: Once you have correctly identified the
+traffic light and determined its position, you can convert it to a
+waypoint index and publish it.
+
+(4) Waypoint Updater (Full): Use /traffic_waypoint to change the
+waypoint target velocities before publishing to /final_waypoints. Your
+car should now stop at red traffic lights and move when they are
+green.
+
 4. Test on simulator
 5. Submission
 - Team Lead
