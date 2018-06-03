@@ -107,7 +107,7 @@ class TLDetector(object):
         p_x = pose.position.x
         p_y = pose.position.y
         min_dist = float('inf')
-        # 
+        # emumerate the index & coord of waypoints
         for idx, wpt in enumerate(self.waypoints.waypoints):
             w_x = wpt.pose.pose.position.x
             w_y = wpt.pose.pose.position.y
@@ -116,7 +116,6 @@ class TLDetector(object):
             if(dist < min_dist):
                 min_dist = dist
                 closest_idx = idx
-
         return closest_idx
 
     def get_light_state(self, light):
