@@ -104,7 +104,7 @@ class TLDetector(object):
             int: index of the closest waypoint in self.waypoints
 
         """
-        #TODO implement using kd tree
+        #TODO implement by using kd tree(scipy~, see line 61~62)
         closest_idx = self.kdtree_waypoints.query([px,py],1)[1]
         return closest_idx
 
@@ -153,8 +153,11 @@ class TLDetector(object):
             diff = len(self.waypoints.waypoints)
             for idx, lgt in enumerate(self.lights):
                 stop_line_position = stop_line_positions[idx]
+                # find a nearest waypoint from stop_line
                 closest_stop_idx = self.get_closest_waypoint(stop_line_position[0], stop_line_position[1])
+                # diff between stop position and car position 
                 idx_diff = closest_stop_idx - car_position
+                # if this light is nearest one, update it~
                 if idx_diff>=0 and idx_diff<diff:
                     diff = idx_diff
                     light = lgt
