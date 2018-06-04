@@ -10,7 +10,8 @@ ONE_MPH = 0.44704
 class Controller(object):
     #def __init__(self, *args, **kwargs):
     def __init__(self, vehicle_mass, fuel_capacity, brake_deadband, decel_limit,
-                accel_limit, wheel_radius, wheel_base, steer_ratio, max_lat_accel, max_steer_angle):
+                accel_limit, wheel_radius, wheel_base, steer_ratio, max_lat_accel, 
+                max_steer_angle):
         # TODO: Implement
         self.yaw_controller = YawController(wheel_base, steer_ratio, 0.1, max_lat_accel, max_steer_angle)
 
@@ -45,6 +46,12 @@ class Controller(object):
 
         current_vel = self.vel_lpf.filt(current_vel)
 
+        # rospy.logwarn("angular vel: {0}".format(angular_vel))
+        # rospy.logwarn("target velocity: {0}".format(linear_vel))
+        # rospy.logwarn("target angular velocity: {0}".format(angular_vel))
+        # rospy.logwarn("current velocity: {0}".format(current_vel))
+        # rospy.logwarn("filtered velocity: {0}".format(self.vel_lpf.get()))
+
         steering = self.yaw_controller.get_steering(linear_vel, angular_vel, current_vel)
 
         vel_error = linear_vel - current_vel
@@ -59,7 +66,7 @@ class Controller(object):
 
         if linear_vel == 0. and current_vel < 0.1:
             throttle = 0
-            brake - 700    # N*m - to hole the car in place if we are stopped at a light. Acceleration - 1m/s^2
+            brake = 400    # N*m - to hole the car in place if we are stopped at a light. Acceleration - 1m/s^2
 
         elif throttle < .1 and vel_error < 0:
             throttle = 0

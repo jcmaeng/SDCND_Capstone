@@ -69,10 +69,10 @@ class DBWNode(object):
         # TODO: Subscribe to all the topics you need to
         rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.dbw_enabled_cb)
         rospy.Subscriber('/twist_cmd', TwistStamped, self.twist_cb)
-        rospy.Subscriber('/current_velocity', TwistStamped, self.twist_cb)
+        rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_cb)
 
         self.current_vel = None
-        self.curr_ang_vel = None
+        self.curr_ang_vel = None # seems it's not used? 
         self.dbw_enabled = None
         self.linear_vel = None
         self.angular_vel = None
