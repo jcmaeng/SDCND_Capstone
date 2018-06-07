@@ -40,6 +40,6 @@ class TLClassifier(object):
         elif prediction == 'green':
             traffic_light = TrafficLight.GREEN
         elif prediction == 'YELLOW':
-            traffic_light = TrafficLight.YELLOW'
+            traffic_light = TrafficLight.YELLOW
         
         return traffic_light
