@@ -7,9 +7,9 @@ Git repository for the team of SDCND Capstone project
 2. ~~Make TODO list~~
 3. Implementation
 
-(1) Waypoint Updater Node (Partial): Complete a partial waypoint
+~~(1) Waypoint Updater Node (Partial): Complete a partial waypoint
 updater which subscribes to /base_waypoints and /current_pose and
-publishes to /final_waypoints.
+publishes to /final_waypoints.~~
 
 (2) DBW Node: Once your waypoint updater is publishing
 /final_waypoints, the waypoint_follower node will start publishing
@@ -32,6 +32,9 @@ car should now stop at red traffic lights and move when they are
 green.
 
 4. Test on simulator
+- Highway
+- Test Lot
+
 5. Submission
 - Team Lead
 - Team Members
