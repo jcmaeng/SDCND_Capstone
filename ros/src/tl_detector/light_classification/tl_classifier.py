@@ -1,7 +1,9 @@
 from styx_msgs.msg import TrafficLight
 
 import os
-
+import numpy as np
+import tensorflow as tf
+import sys
 
 class TLClassifier(object):
     def __init__(self):
@@ -9,18 +11,28 @@ class TLClassifier(object):
         # pass
         num_classes = 3
         pwd = os.path.dirname(os.path.realpath(__file__))
-        model_path = os.path.join(pwd, '')
-        labeltxt_path = os.path.join(pwd, '')
+        model_path = os.path.join(pwd, 'sim_graph.pb')
+        labeltxt_path = os.path.join(pwd, 'labels_map.pbtxt')
 
         self.img = None
         self.category_dict =  { 1:{'name':'red', 'id':1}, 
                                 2:{'name':'yellow', 'id':2}, 
                                 3:{'name':'green', 'id':3}}
-        
-        self.sess = tf.Session()
+        self.d_graph = tf.Graph()
 
+        with self.d_graph.as_default():
+            graph_def = tf.GraphDef()
+            with tf.gfile.Gfile(model_path, 'rb') as g_file:
+                read_graph = g_file.read()
+                graph_def.ParseFromString(read_graph)
+                tf.import_graph_def(graph_def, name='')
+            self.img_tensor = self.d_graph.get_tensor_by_name('img_tensor:0')
+            self.detection_boxes = self.d_graph.get_tensor_by_name('detection_boxes:0')
+            self.detection_classes = self.d_graph.get_tensor_by_name('detection_classes:0')
+            self.detection_num = self.d_graph.get_tensor_by_name('detection_num:0')
+            self.detection_scores = self.d_graph.get_tensor_by_name('detection_scores:0')
 
-
+        self.sess = tf.Session(graph=self.d_graph)
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
