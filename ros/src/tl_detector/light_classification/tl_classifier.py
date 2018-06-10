@@ -22,7 +22,7 @@ class TLClassifier(object):
 
         with self.d_graph.as_default():
             graph_def = tf.GraphDef()
-            with tf.gfile.Gfile(model_path, 'rb') as g_file:
+            with tf.gfile.GFile(model_path, 'rb') as g_file:
                 read_graph = g_file.read()
                 graph_def.ParseFromString(read_graph)
                 tf.import_graph_def(graph_def, name='')
