@@ -26,10 +26,10 @@ class TLClassifier(object):
                 read_graph = g_file.read()
                 graph_def.ParseFromString(read_graph)
                 tf.import_graph_def(graph_def, name='')
-            self.img_tensor = self.d_graph.get_tensor_by_name('img_tensor:0')
+            self.img_tensor = self.d_graph.get_tensor_by_name('image_tensor:0')
             self.detection_boxes = self.d_graph.get_tensor_by_name('detection_boxes:0')
             self.detection_classes = self.d_graph.get_tensor_by_name('detection_classes:0')
-            self.detection_num = self.d_graph.get_tensor_by_name('detection_num:0')
+            self.detection_num = self.d_graph.get_tensor_by_name('num_detections:0')
             self.detection_scores = self.d_graph.get_tensor_by_name('detection_scores:0')
 
         self.sess = tf.Session(graph=self.d_graph)
