@@ -15,7 +15,7 @@ publishes to /final_waypoints.~~
 /final_waypoints, the waypoint_follower node will start publishing
 messages to the/twist_cmd topic. At this point, you have everything
 needed to build the dbw_node. After completing this step, the car
-should drive in the simulator, ignoring the traffic lights.
+should drive in the simulator, ignoring the traffic lights.~~
 
 (3) Traffic Light Detection: This can be split into 2 parts:
 - Detection: Detect the traffic light and its color from the
