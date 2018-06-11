@@ -39,7 +39,7 @@ green.
 
 4. Test on simulator
 - Highway
-- Test Lot
+- ~~Test Lot~~
 
 5. Submission
 - Team Lead
