@@ -11,7 +11,7 @@ Git repository for the team of SDCND Capstone project
 updater which subscribes to /base_waypoints and /current_pose and
 publishes to /final_waypoints.~~
 
-(2) DBW Node: Once your waypoint updater is publishing
+~~(2) DBW Node: Once your waypoint updater is publishing
 /final_waypoints, the waypoint_follower node will start publishing
 messages to the/twist_cmd topic. At this point, you have everything
 needed to build the dbw_node. After completing this step, the car
