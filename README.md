@@ -1,6 +1,12 @@
 # SDCND_Capstone
-Git repository for the team of SDCND Capstone project
+Git repository for the team `Final Boost` of SDCND Capstone project
 
+## Team Members (Slack ID, E-mail)
+- Ji Chan Maeng (@jcmaeng, jcmaeng@gmail.com)
+- Yifei Huang (@easyfly, easyfly.huang@gmail.com)
+- Xiaokun Jiang (@hapuhundre, mangertim@163.com)
+- Wu Siu Wa (@feichashao, feichashao@gmail.com)
+- Liu Aozhi (@liuaozhi, liuaozhi1989@gmail.com)
 
 ## To Do
 1. ~~Prepare the git repository~~
