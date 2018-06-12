@@ -193,6 +193,7 @@ class TLDetector(object):
         """
         #closest_light = None
         #line_wp_idx = None
+        light = None
         light_waypoint = None
         if self.waypoints == None or self.lights == None:
             return -1, TrafficLight.UNKNOWN
