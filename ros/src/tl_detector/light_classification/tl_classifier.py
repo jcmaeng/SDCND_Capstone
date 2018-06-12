@@ -31,7 +31,7 @@ class TLClassifier(object):
                 graph_def.ParseFromString(read_graph)
                 tf.import_graph_def(graph_def, name='')
             self.sess = tf.Session(graph=self.detection_graph)
-            
+
         self.image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
         self.detection_boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
         self.detection_classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
@@ -66,7 +66,7 @@ class TLClassifier(object):
             max_score = max(scores)
             if scores[idx] > min_threshold:
                 prediction = self.category_idx[classes[idx]]['name']
-                rospy.logwarn("[Traffic Light Classification:] {}".format(prediction))
+                rospy.logwarn("[Traffic light detection:] {}".format(prediction))
                 if prediction == 'red':
                     traffic_light = TrafficLight.RED
                 elif prediction == 'green':

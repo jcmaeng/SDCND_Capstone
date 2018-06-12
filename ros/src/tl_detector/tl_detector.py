@@ -218,7 +218,13 @@ class TLDetector(object):
                     light = light_candidate
                     closest_light_wp = light_wp
                     min_dist = light_dist
-            
+            """
+            uint8 UNKNOWN=4
+            uint8 GREEN=2
+            uint8 YELLOW=1
+            uint8 RED=0
+            """
+
             if light:
                 state = self.get_light_state(light)
                 light_wp = closest_light_wp
@@ -244,11 +250,6 @@ class TLDetector(object):
             self.upcoming_red_light_pub.publish(Int32(self.last_wp))
         
         self.state_count += 1
-        
-        
-        # if not, initialization
-        self.waypoints = None
-        return -1, TrafficLight.UNKNOWN
 
 if __name__ == '__main__':
     try:
