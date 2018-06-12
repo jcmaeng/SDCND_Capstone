@@ -222,6 +222,7 @@ class TLDetector(object):
             if light:
                 state = self.get_light_state(light)
                 light_wp = closest_light_wp
+                rospy.logwarn("Traffic light id: {}, and its color state: {}".format(closest_light_wp, state))
             else:
                 state = TrafficLight.UNKNOWN
                 light_wp = -1
