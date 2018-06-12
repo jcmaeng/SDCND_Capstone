@@ -173,11 +173,8 @@ class TLDetector(object):
         return light
 
     def dist2d(self, x1, y1, x2, y2):
-        return math.sqrt((x2-x1)**2 + (y2-y1)**2
-
-#    ------------------------------------------------
-
-
+        return math.sqrt((x2-x1)**2 + (y2-y1)**2)
+        
     def process_traffic_lights(self):
         """Finds closest visible traffic light, if one exists, and determines its
             location and color

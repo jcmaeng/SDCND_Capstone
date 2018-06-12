@@ -67,12 +67,12 @@ class TLClassifier(object):
             if scores[idx] > min_threshold:
                 prediction = self.category_idx[classes[idx]]['name']
                 rospy.logwarn("[Traffic Light Classification:] {}".format(prediction))
-                    if prediction == 'red':
-                        traffic_light = TrafficLight.RED
-                    elif prediction == 'green':
-                        traffic_light = TrafficLight.GREEN
-                    elif prediction == 'yellow':
-                        traffic_light = TrafficLight.YELLOW
+                if prediction == 'red':
+                    traffic_light = TrafficLight.RED
+                elif prediction == 'green':
+                    traffic_light = TrafficLight.GREEN
+                elif prediction == 'yellow':
+                    traffic_light = TrafficLight.YELLOW
             else:
                 rospy.logwarn("[Not Known]")
                             
