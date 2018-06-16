@@ -19,8 +19,8 @@ class TLClassifier(object):
         labeltxt_path = os.path.join(pwd, 'labels_map.pbtxt')
         
         label_map = label_utils.load_labelmap(labeltxt_path)
-        self.category = label_utils.convert_label_map_to_categories(label_map, max_num_classes=num_classes, use_display_name=True)
-        self.category_idx = label_utils.create_category_index(self.category)
+        traffic_cate = label_utils.convert_label_map_to_categories(label_map, max_num_classes=num_classes, use_display_name=True)
+        self.category_idx = label_utils.create_category_index(traffic_cate)
         
         self.detection_graph = tf.Graph()
         
