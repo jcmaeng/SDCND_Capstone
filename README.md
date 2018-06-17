@@ -10,7 +10,7 @@ Git repository for the team `Final Boost` of SDCND Capstone project
 ## To Do
 1. ~~Prepare the git repository~~
 2. ~~Make TODO list~~
-3. Implementation
+3. ~~Implementation~~
 
 ~~(1) Waypoint Updater Node (Partial): Complete a partial waypoint
 updater which subscribes to /base_waypoints and /current_pose and
@@ -36,7 +36,7 @@ waypoint target velocities before publishing to /final_waypoints. Your
 car should now stop at red traffic lights and move when they are
 green.~~
 
-~~4. Test on simulator
+4. ~~Test on simulator
 - Highway
 - Test Lot~~
 
