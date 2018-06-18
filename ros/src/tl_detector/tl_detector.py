@@ -64,8 +64,6 @@ class TLDetector(object):
 
     def waypoints_cb(self, waypoints):
         self.waypoints = waypoints
-        # waypoints_2d = [[w_p.pose.pose.position.x, w_p.pose.pose.position.y] for w_p in waypoints.waypoints]
-        # self.kdtree_waypoints = KDTree(waypoints_2d)
 
     def traffic_cb(self, msg):
         self.lights = msg.lights
@@ -102,34 +100,35 @@ class TLDetector(object):
         self.state_count += 1
         """
 # --------------------------------------------------------------------------------------------
-    def create_light_site(self, x, y, z, yaw, state):
+    def light_loc(self,state, lx, ly, lz, lyaw):
+        # light state initialization
         light = TrafficLight()
+        
+        # 
+        light.state = state
 
+        # header position
         light.header = Header()
         light.header.stamp = rospy.Time.now()
         light.header.frame_id = 'world'
-
-        # Create a Pose object to place inside the TrafficLight object
+        
+        # pose position
         light.pose = PoseStamped()
-
-        light.pose.header = Header()
-        light.pose.header.stamp = rospy.Time.now()
-        light.pose.header.frame_id = 'world'
-
-        light.pose.pose.position.x = x
-        light.pose.pose.position.y = y
-        light.pose.pose.position.z = z
-
-        # For reference: https://answers.ros.org/question/69754/quaternion-transformations-in-python/
-        q = tf.transformations.quaternion_from_euler(0.0, 0.0, math.pi * yaw / 180.0)
-        light.pose.pose.orientation = Quaternion(*q)
-
-        light.state = state
+        light.pose.stamp = rospy.Time.now()
+        light.pose.frame_id = 'world'
+        light.pose.pose.position.x = lx
+        light.pose.pose.position.y = ly
+        light.pose.pose.position.z = lz
+        q_from_euler = tf.transformations.quaternion_from_euler(0.0, 0.0, math.pi*lyaw/180.0)
+        light.pose.pose.position.orientation = Quaternion(*q_from_euler)
 
         return light
 
     def dist2d(self, x1, y1, x2, y2):
         return math.sqrt((x2-x1)**2 + (y2-y1)**2)
+    
+    def dist3d(self,pos1, pos2):
+        return math.sqrt((pos1.x-pos2.x)**2 + (pos1.y-pos2.y)**2 + (pos1.z-pos2.z)**2)
 # ------------------------------------------------------------------------------------------
 
     def get_closest_waypoint(self, pose):
@@ -144,14 +143,14 @@ class TLDetector(object):
         """
         #TODO implement by using kd tree(scipy~, see line 61~62)
         dist = float('inf')
-        dl = lambda a, b: math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2  + (a.z-b.z)**2)
-        wp = 0
+        # dl = lambda a, b: math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2  + (a.z-b.z)**2)
+        closest_wp_idx = 0
         for i in range(len(self.waypoints.waypoints)):
-            new_dist = dl(pose.position, self.waypoints.waypoints[i].pose.pose.position)
+            new_dist = dist3d(pose.position, self.waypoints.waypoints[i].pose.pose.position)
             if new_dist < dist:
                 dist = new_dist
-                wp = i
-        return wp
+                closest_wp_idx = i
+        return closest_wp_idx
 
     def get_light_state(self, light):
         """Determines the current color of the traffic light
@@ -170,7 +169,7 @@ class TLDetector(object):
             self.prev_light_loc = None
             return False
         
-        self.camera_image.encoding = "rgb8"
+        #self.camera_image.encoding = "rgb8"
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "rgb8")
         # cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
         # Get classification
@@ -179,8 +178,6 @@ class TLDetector(object):
             state = self.last_state
 
         return state
-
-
         
     def process_traffic_lights(self):
         """Finds closest visible traffic light, if one exists, and determines its
@@ -204,11 +201,11 @@ class TLDetector(object):
 
             light_positions = self.light_positions
             min_dist = float('inf')
-            for i, light_position in enumerate(self.light_positions):
+            for i, light_pos in enumerate(self.light_positions):
                 
-                light_candidate = self.create_light_site(light_position[0], light_position[1], 
-                                                         0.0, 0.0, TrafficLight.UNKNOWN)
-                light_wp = self.get_closest_waypoint(light_candidate.pose.pose)
+                light_now = self.light_loc(TrafficLight.UNKNOWN, light_pos[0], light_pos[1], 
+                                                         0.0, 0.0)
+                light_wp = self.get_closest_waypoint(light_now.pose.pose)
                 
                 light_dist = self.dist2d(self.waypoints.waypoints[car_wp].pose.pose.position.x,
                                              self.waypoints.waypoints[car_wp].pose.pose.position.y,
@@ -216,7 +213,7 @@ class TLDetector(object):
                                              self.waypoints.waypoints[light_wp].pose.pose.position.y)
                 
                 if (light_wp % len(self.waypoints.waypoints)) > (car_wp % len(self.waypoints.waypoints)) and (light_dist < 100) and (light_dist < min_dist):
-                    light = light_candidate
+                    light = light_now
                     closest_light_wp = light_wp
                     min_dist = light_dist
             """
@@ -241,12 +238,14 @@ class TLDetector(object):
         if self.state != state:
             self.state_count = 0
             self.state = state
+
         elif self.state_count >= STATE_COUNT_THRESHOLD:
             self.last_state = self.state
             if state not in [TrafficLight.RED, TrafficLight.YELLOW]:
                 light_wp = -1
             self.last_wp = light_wp
             self.upcoming_red_light_pub.publish(Int32(light_wp))
+        
         else:
             self.upcoming_red_light_pub.publish(Int32(self.last_wp))
         
