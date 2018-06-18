@@ -106,6 +106,9 @@ roslaunch launch/styx.launch
 4. Run the simulator
 
 ### Real world testing
+
+**please change the code in `\ros\src\tl_detector\light_classification\tl_classifier.py` , line 18, from `models/sim_graph_ssd.pb` to `models/real_graph_ssd.pb`**
+
 1. Download [training bag](https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/traffic_light_bag_file.zip) that was recorded on the Udacity self-driving car.
 2. Unzip the file
 ```bash
