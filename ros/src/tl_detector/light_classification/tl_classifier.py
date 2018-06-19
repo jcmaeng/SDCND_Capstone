@@ -74,6 +74,7 @@ class TLClassifier(object):
                 elif prediction == 'yellow':
                     traffic_light = TrafficLight.YELLOW
             else:
+                pass
                 # rospy.logwarn("[No Result]")
                             
         return traffic_light

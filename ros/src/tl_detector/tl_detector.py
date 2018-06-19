@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import Int32, Header
-from geometry_msgs.msg import Quaternion,PoseStamped, Pose
+from geometry_msgs.msg import Quaternion, PoseStamped, Pose
 from styx_msgs.msg import TrafficLightArray, TrafficLight
 from styx_msgs.msg import Lane
 from sensor_msgs.msg import Image
@@ -114,13 +114,13 @@ class TLDetector(object):
         
         # pose position
         light.pose = PoseStamped()
-        light.pose.stamp = rospy.Time.now()
-        light.pose.frame_id = 'world'
+        light.pose.header.stamp = rospy.Time.now()
+        light.pose.header.frame_id = 'world'
         light.pose.pose.position.x = lx
         light.pose.pose.position.y = ly
         light.pose.pose.position.z = lz
         q_from_euler = tf.transformations.quaternion_from_euler(0.0, 0.0, math.pi*lyaw/180.0)
-        light.pose.pose.position.orientation = Quaternion(*q_from_euler)
+        light.pose.pose.orientation = Quaternion(*q_from_euler)
 
         return light
 
@@ -146,7 +146,7 @@ class TLDetector(object):
         # dl = lambda a, b: math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2  + (a.z-b.z)**2)
         closest_wp_idx = 0
         for i in range(len(self.waypoints.waypoints)):
-            new_dist = dist3d(pose.position, self.waypoints.waypoints[i].pose.pose.position)
+            new_dist = self.dist3d(pose.position, self.waypoints.waypoints[i].pose.pose.position)
             if new_dist < dist:
                 dist = new_dist
                 closest_wp_idx = i
