@@ -40,7 +40,7 @@ green.~~
 - ~~Highway~~
 - ~~Test Lot~~
 
-5. Test with ROS bags for Traffic Light Detection Video Test
+5. ~~Test with ROS bags for Traffic Light Detection Video Test~~
 
 6. Submission
 - Team Lead
