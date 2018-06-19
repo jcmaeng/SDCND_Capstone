@@ -9,13 +9,20 @@ import rospy
 from utils import label_utils  
 from utils import visual_utils
 
+use_simulator = True	# True: use simulator, False: real environment
+
 class TLClassifier(object):
     def __init__(self):       
         #TODO load classifier
         # pass
         num_classes = 4
         pwd = os.path.dirname(os.path.realpath(__file__))
-        model_path = os.path.join(pwd, 'models/sim_graph_ssd.pb')
+
+        if use_simulator:
+            model_path = os.path.join(pwd, 'models/sim_graph_ssd.pb')
+        else:
+            model_path = os.path.join(pwd, 'models/real_graph_ssd.pb')
+
         labeltxt_path = os.path.join(pwd, 'labels_map.pbtxt')
         
         label_map = label_utils.load_labelmap(labeltxt_path)
